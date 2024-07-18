@@ -78,13 +78,13 @@ class RoundImageView : ImageView {
     }
 
     override fun onDraw(canvas: Canvas) {
+        canvas.clipPath(createRoundRectPath())
         super.onDraw(canvas)
-        roundRectPaint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
-        drawRoundRect(canvas)
-        roundRectPaint.setXfermode(null)
-//        if (showBorder) {
-//            drawBorder(canvas)
-//        }
+//        roundRectPaint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
+//        canvas.drawPath(createRoundRectPath(), roundRectPaint)
+//        roundRectPaint.setXfermode(null)
+//        if (showBorder)
+//            canvas.drawPath(createBorderPath(), borderPaint)
     }
 
     private fun createCornerRadius(): FloatArray {
@@ -105,21 +105,21 @@ class RoundImageView : ImageView {
         )
     }
 
-    private fun drawRoundRect(canvas: Canvas) {
+    private fun createRoundRectPath(): Path {
         val path = Path()
         path.addRoundRect(
             createContentRect(),
             createCornerRadius(),
             Path.Direction.CW
         )
-        canvas.drawPath(path, roundRectPaint)
+        return path
     }
 
-    private fun drawBorder(canvas: Canvas) {
+    private fun createBorderPath(): Path {
         val rect = createContentRect()
         rect.inset(borderWidth / 2, borderWidth / 2)
         val path = Path()
-        path.addRoundRect(rect, createCornerRadius(), Path.Direction.CW)
-        canvas.drawPath(path, borderPaint)
+        path.addRoundRect(rect, createCornerRadius(), Path.Direction.CCW)
+        return path
     }
 }
