@@ -5,8 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -68,8 +66,10 @@ class RoundImageView : ImageView {
         borderPaint.isAntiAlias = true
         borderPaint.color = borderColor
         borderPaint.style = Paint.Style.STROKE
-        borderPaint.strokeWidth = borderWidth
+        borderPaint.strokeWidth = borderWidth * 2
+        borderPaint.strokeCap = Paint.Cap.SQUARE
         setLayerType(LAYER_TYPE_SOFTWARE, null)
+        scaleType = ScaleType.FIT_XY
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -80,11 +80,8 @@ class RoundImageView : ImageView {
     override fun onDraw(canvas: Canvas) {
         canvas.clipPath(createRoundRectPath())
         super.onDraw(canvas)
-//        roundRectPaint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
-//        canvas.drawPath(createRoundRectPath(), roundRectPaint)
-//        roundRectPaint.setXfermode(null)
-//        if (showBorder)
-//            canvas.drawPath(createBorderPath(), borderPaint)
+        if (showBorder)
+            canvas.drawPath(createBorderPath(), borderPaint)
     }
 
     private fun createCornerRadius(): FloatArray {
@@ -117,7 +114,6 @@ class RoundImageView : ImageView {
 
     private fun createBorderPath(): Path {
         val rect = createContentRect()
-        rect.inset(borderWidth / 2, borderWidth / 2)
         val path = Path()
         path.addRoundRect(rect, createCornerRadius(), Path.Direction.CCW)
         return path
