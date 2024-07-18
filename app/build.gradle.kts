@@ -32,7 +32,7 @@ android {
 
 dependencies {
 
-    api(project(":android-round-image"))
+    api("io.github.hellogoogle2000:android-round-image:1.0.1")
 
     // AndroidX
     api("androidx.appcompat:appcompat:1.7.0")
