@@ -43,4 +43,4 @@ api("io.github.hellogoogle2000:android-round-image:1.0.1")
 
 # Preview
 
-<img src="https://github.com/user-attachments/assets/dc78c8ba-e9fd-44ee-ab77-c38327a83f42" height="250"><br>
+<img src="https://github.com/user-attachments/assets/8aabc5a7-12b1-4d93-9421-33d511fa82f1" height="250"><br>
